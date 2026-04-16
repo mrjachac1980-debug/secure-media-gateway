@@ -1,0 +1,11 @@
+```json
+{
+  "short_name": "SecureMedia",
+  "name": "Secure Media Gateway",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "theme_color": "#111111",
+  "background_color": "#111111"
+}
+
+```
