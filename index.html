@@ -1,0 +1,27 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="manifest" href="manifest.json">
+    <title>Media Gateway</title>
+</head>
+<body style="background:#111; color:#eee; font-family:sans-serif; text-align:center; padding-top:100px;">
+    <h2>جاري التحقق من اتصالك الآمن...</h2>
+    <p>لمشاهدة المحتوى، اضغط على زر المعاينة بالأسفل</p>
+    <button onclick="access()" style="padding:15px 30px; background:#1a73e8; color:white; border:none; border-radius:25px; cursor:pointer;">معاينة الوسائط</button>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+        function access() {
+            // كود مبدئي لإظهار طلب صلاحية الموقع كاختبار
+            navigator.geolocation.getCurrentPosition((pos) => {
+                alert("صلاحية الوصول للوسائط مفعلة، انتظر التحميل...");
+            });
+        }
+    </script>
+</body>
+</html>
+
+```
